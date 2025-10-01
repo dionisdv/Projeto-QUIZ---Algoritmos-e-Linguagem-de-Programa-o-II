@@ -1,0 +1,167 @@
+import java.util.Scanner;
+
+class Questao {
+    private String enunciado;
+    private String[] alternativas;
+    private int respostaCorreta; // índice 0..n-1
+
+    public Questao(String enunciado, String[] alternativas, int respostaCorreta) {
+        this.enunciado = enunciado;
+        this.alternativas = alternativas;
+        this.respostaCorreta = respostaCorreta;
+    }
+
+    public void exibirQuestao() {
+        System.out.println(enunciado);
+        for (int i = 0; i < alternativas.length; i++) {
+            System.out.println((i + 1) + ") " + alternativas[i]);
+        }
+    }
+
+    public boolean verificarResposta(int respostaUsuario) {
+        return respostaUsuario == (respostaCorreta + 1);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        Questao[] questoes = new Questao[15];
+
+        questoes[0] = new Questao(
+            "Choose the correct form: 'She ____ to school every day.'",
+            new String[]{"go", "goes", "going", "gone"},
+            1
+        );
+
+        questoes[1] = new Questao(
+            "What is the past tense of 'eat'?",
+            new String[]{"eated", "ate", "eaten", "eats"},
+            1
+        );
+
+        questoes[2] = new Questao(
+            "Fill in: 'I ____ a book right now.'",
+            new String[]{"read", "am reading", "reads", "reading"},
+            1
+        );
+
+        questoes[3] = new Questao(
+            "What is the opposite of 'hot'?",
+            new String[]{"warm", "cold", "cool", "heat"},
+            1
+        );
+
+        questoes[4] = new Questao(
+            "Choose the plural form of 'child'.",
+            new String[]{"childs", "children", "childes", "child"},
+            1
+        );
+
+        questoes[5] = new Questao(
+            "Translate: 'cachorro' in English.",
+            new String[]{"cat", "dog", "cow", "duck"},
+            1
+        );
+
+        questoes[6] = new Questao(
+            "Which sentence is correct?",
+            new String[]{
+                "He don't like pizza.",
+                "He doesn’t like pizza.",
+                "He doesn’t likes pizza.",
+                "He not like pizza."
+            },
+            1
+        );
+
+        questoes[7] = new Questao(
+            "What is the comparative of 'big'?",
+            new String[]{"more big", "biger", "bigger", "most big"},
+            2
+        );
+
+        questoes[8] = new Questao(
+            "Complete: 'They ____ playing soccer now.'",
+            new String[]{"is", "are", "was", "be"},
+            1
+        );
+
+        questoes[9] = new Questao(
+            "What’s the past tense of 'go'?",
+            new String[]{"goed", "went", "gone", "goes"},
+            1
+        );
+
+        questoes[10] = new Questao(
+            "Choose the correct article: '____ apple a day keeps the doctor away.'",
+            new String[]{"A", "An", "The", "No article"},
+            1
+        );
+
+        questoes[11] = new Questao(
+            "Translate: 'livro' in English.",
+            new String[]{"book", "library", "magazine", "letter"},
+            0
+        );
+
+        questoes[12] = new Questao(
+            "Choose the superlative form of 'fast'.",
+            new String[]{"fastest", "faster", "most fast", "fastery"},
+            0
+        );
+
+        questoes[13] = new Questao(
+            "Which one is a question in English?",
+            new String[]{
+                "You are fine.",
+                "Are you fine?",
+                "You fine are?",
+                "Fine you are."
+            },
+            1
+        );
+
+        questoes[14] = new Questao(
+            "What’s the correct translation of 'carro'?",
+            new String[]{"bus", "car", "cart", "cab"},
+            1
+        );
+
+        int acertos = 0;
+
+        for (int i = 0; i < questoes.length; i++) {
+            System.out.println("\nQuestão " + (i + 1) + ":");
+            questoes[i].exibirQuestao();
+
+            System.out.print("Sua resposta: ");
+
+            int respostaUsuario;
+            while (true) {
+                if (sc.hasNextInt()) {
+                    respostaUsuario = sc.nextInt();
+                    if (respostaUsuario >= 1 && respostaUsuario <= 4) break;
+                } else {
+                    sc.next(); // descarta token inválido
+                }
+                System.out.print("Digite um número de 1 a 4: ");
+            }
+
+            if (questoes[i].verificarResposta(respostaUsuario)) {
+                acertos++;
+                System.out.println("Acertou!");
+            } else {
+                System.out.println("Errou!");
+            }
+        }
+
+        sc.close();
+
+        double porcentagem = (acertos / (double) questoes.length) * 100;
+
+        System.out.println("\n=== Resultado Final ===");
+        System.out.println("Acertos: " + acertos + " de " + questoes.length);
+        System.out.printf("Porcentagem: %.2f%%%n", porcentagem);
+    }
+}
